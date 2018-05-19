@@ -37,30 +37,37 @@ describe("finalScore function", () => {
   });
 
   test('Adds up a simple low score', () => {
-    expect(bowling.finalScore(simpleLowScore)).toBe(simpleLowScoreTotal)
+    bowling._scoreCard = simpleLowScore
+    expect(bowling.finalScore()).toBe(simpleLowScoreTotal)
   });
 
   test('Adds the points for a single spare', () => {
-    expect(bowling.finalScore(singleSpareScore)).toBe(singleSpareScoreTotal)
+    bowling._scoreCard = singleSpareScore
+    expect(bowling.finalScore()).toBe(singleSpareScoreTotal)
   });
 
   test('Adds the points for lots of spares', () => {
-    expect(bowling.finalScore(lotsOfSparesScore)).toBe(lotsOfSparesScoreTotal)
+    bowling._scoreCard = lotsOfSparesScore
+    expect(bowling.finalScore()).toBe(lotsOfSparesScoreTotal)
   });
 
   test('Add the points for a single strike', () => {
-    expect(bowling.finalScore(singleStrikeScore)).toBe(singleStrikeScoreTotal)
+    bowling._scoreCard = singleStrikeScore
+    expect(bowling.finalScore()).toBe(singleStrikeScoreTotal)
   });
 
   test('Adds the points for lots of strikes', () => {
-    expect(bowling.finalScore(lotsOfStrikesScore)).toBe(lotsOfStrikesScoreTotal)
+    bowling._scoreCard = lotsOfStrikesScore
+    expect(bowling.finalScore()).toBe(lotsOfStrikesScoreTotal)
   });
 
   test('Add all the points for a perfect game', () => {
-    expect(bowling.finalScore(perfectGameScore)).toBe(perfectGameScoreTotal)
+    bowling._scoreCard = perfectGameScore;
+    expect(bowling.finalScore()).toBe(perfectGameScoreTotal)
   })
 
   test('Add all the points for a near perfect game', () => {
-    expect(bowling.finalScore(nearPerfectGameScore)).toBe(nearPerfectGameScoreTotal)
+    bowling._scoreCard = nearPerfectGameScore;
+    expect(bowling.finalScore()).toBe(nearPerfectGameScoreTotal)
   })
 });

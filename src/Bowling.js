@@ -1,46 +1,58 @@
 function Bowling() {
+  this._scoreCard = [];
   this.total = 0;
-}
+};
 
-Bowling.prototype.basicScoreCalculation = function(array) {
-  let simpleScore = 0;
-  array.map( function(frame) {
-    frame.forEach( function(roll) {
-      simpleScore += roll
+Bowling.prototype._basicScoreCalculation = function(array) {
+  array.map( (frame) => {
+    frame.map( (roll) => {
+      this.total += roll
     })
   })
-  this.total += simpleScore
-}
+};
 
-Bowling.prototype.extraScoreCalculation = function(array) {
+Bowling.prototype._extraScoreCalculation = function(array) {
   var extraPoints = 0
-  array.map( function(frame, index) {
-    if (frame.length == 2 && frame[0] + frame[1] == 10) {
-      var rollPlusOne = array[index + 1][0]
-      extraPoints += rollPlusOne
-    } else if (frame.length == 1) {
-      let rollPlusOne = array[index + 1][0]
 
+  array.map( (frame, index) => {
+    // Calculate what the next roll is
+    var rollPlusOne = () => {
+      return array[index + 1][0];
+    }
+
+    // Calculate what the next roll after that is
+    var rollPlusTwo = () => {
       if (array[index + 1].length == 1) {
-        var rollPlusTwo = array[index + 2][0]
+        return array[index + 2][0]
       } else {
-        var rollPlusTwo = array[index + 1][1]
+        return array[index + 1][1]
       }
+    }
 
-      extraPoints += rollPlusOne
-      extraPoints += rollPlusTwo
+    // For a spare, add the next roll
+    if (frame[0] + frame[1] == 10) {
+      extraPoints += rollPlusOne()
+    }
+
+    // For a strike, add the next two rolls
+    if (frame.length == 1) {
+      extraPoints += rollPlusOne()
+      extraPoints += rollPlusTwo()
     }
   })
+  
   this.total += extraPoints
-}
+};
 
-Bowling.prototype.finalScore = function(array) {
+Bowling.prototype.finalScore = function() {
+  var array = this._scoreCard;
+
   if (array.length != 10) {
     throw new Error("Incomplete score provided")
   };
 
-  this.basicScoreCalculation(array);
-  this.extraScoreCalculation(array);
+  this._basicScoreCalculation(array);
+  this._extraScoreCalculation(array);
 
   return this.total;
 };
