@@ -1,6 +1,12 @@
 function Bowling() {
-  this._scoreCard = [];
-  this.total = 0;
+  this._scoreCard = [[],[],[],[],[],[],[],[],[],[]];
+  this._progress = { 'frame': 0, 'roll': 0 };
+  this.total = 0
+};
+
+Bowling.prototype.addRoll = function(number) {
+  this._scoreCard[this._progress.frame][this._progress.roll] = number;
+  this._nextTurn(number)
 };
 
 Bowling.prototype._basicScoreCalculation = function(array) {
@@ -40,7 +46,7 @@ Bowling.prototype._extraScoreCalculation = function(array) {
       extraPoints += rollPlusTwo()
     }
   })
-  
+
   this.total += extraPoints
 };
 
@@ -56,5 +62,14 @@ Bowling.prototype.finalScore = function() {
 
   return this.total;
 };
+
+Bowling.prototype._nextTurn = function(number) {
+  if (this._progress.frame != 9 && (number == 10 || this._progress.roll == 1)) {
+    this._progress.frame += 1;
+    this._progress.roll = 0;
+  } else {
+    this._progress.roll += 1;
+  }
+}
 
 module.exports = Bowling;
