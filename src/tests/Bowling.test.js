@@ -57,7 +57,7 @@ describe('Adding a roll', () => {
     expect(bowling._scoreCard).toContainEqual([10, rollOne])
   });
 
-  test('Adds second strike correctly to final frame', () => {
+  test('Adds third strike correctly to final frame', () => {
     bowling._scoreCard = [[10], [7, 3], [2, 7], [10], [9, 1], [9, 0], [1, 9], [10], [10], [10, 10]];
     bowling._progress = { 'frame': 9, 'roll': 2 }
     var rollOne = 10;
