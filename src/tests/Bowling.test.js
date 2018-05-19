@@ -8,6 +8,9 @@ const simpleLowScoreTotal = 46
 const singleSpareScore = [[1, 9], [5, 2], [0, 4], [1, 2], [5, 2], [0, 4], [7, 1], [2, 2], [2, 3], [1, 0]]
 const singleSpareScoreTotal = 58
 
+const lotsOfSparesScore = [[1, 9], [5, 2], [0, 10], [1, 2], [5, 5], [0, 4], [9, 1], [2, 2], [2, 3], [1, 0]]
+const lotsOfSparesScoreTotal = 72
+
 describe("finalScore function", () => {
   let bowling;
 
@@ -25,8 +28,12 @@ describe("finalScore function", () => {
     expect(bowling.finalScore(simpleLowScore)).toBe(simpleLowScoreTotal)
   });
 
-  test('Adds the points for a single spare to the score correctly', () => {
+  test('Adds the points for a single spare to the score', () => {
     expect(bowling.finalScore(singleSpareScore)).toBe(singleSpareScoreTotal)
+  });
+
+  test('Adds the points for lots of spares to the score', () => {
+    expect(bowling.finalScore(lotsOfSparesScore)).toBe(lotsOfSparesScoreTotal)
   })
 
 });
