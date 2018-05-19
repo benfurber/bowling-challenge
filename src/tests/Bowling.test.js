@@ -11,6 +11,12 @@ const singleSpareScoreTotal = 58
 const lotsOfSparesScore = [[1, 9], [5, 2], [0, 10], [1, 2], [5, 5], [0, 4], [9, 1], [2, 2], [2, 3], [1, 0]]
 const lotsOfSparesScoreTotal = 72
 
+const singleStrikeScore = [[1, 2], [5, 2], [10], [1, 2], [5, 2], [0, 4], [7, 1], [2, 2], [2, 3], [1, 0]]
+const singleStrikeScoreTotal = 55
+
+const lotsOfStrikesScore = [[10], [5, 3], [10], [10], [10], [6, 2], [7, 1], [10], [7, 1], [8, 1]]
+const lotsOfStrikesScoreTotal = 151
+
 describe("finalScore function", () => {
   let bowling;
 
@@ -28,12 +34,20 @@ describe("finalScore function", () => {
     expect(bowling.finalScore(simpleLowScore)).toBe(simpleLowScoreTotal)
   });
 
-  test('Adds the points for a single spare to the score', () => {
+  test('Adds the points for a single spare', () => {
     expect(bowling.finalScore(singleSpareScore)).toBe(singleSpareScoreTotal)
   });
 
-  test('Adds the points for lots of spares to the score', () => {
+  test('Adds the points for lots of spares', () => {
     expect(bowling.finalScore(lotsOfSparesScore)).toBe(lotsOfSparesScoreTotal)
+  });
+
+  test('Add the points for a single strike', () => {
+    expect(bowling.finalScore(singleStrikeScore)).toBe(singleStrikeScoreTotal)
+  });
+
+  test('Adds the points for lots of strikes', () => {
+    expect(bowling.finalScore(lotsOfStrikesScore)).toBe(lotsOfStrikesScoreTotal)
   })
 
 });
