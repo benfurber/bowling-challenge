@@ -17,6 +17,12 @@ const singleStrikeScoreTotal = 55
 const lotsOfStrikesScore = [[10], [5, 3], [10], [10], [10], [6, 2], [7, 1], [10], [7, 1], [8, 1]]
 const lotsOfStrikesScoreTotal = 151
 
+const perfectGameScore = [[10], [10], [10], [10], [10], [10], [10], [10], [10], [10, 10, 10]]
+const perfectGameScoreTotal = 300
+
+const nearPerfectGameScore = [[10], [10], [10], [10], [10], [10], [10], [10], [10], [10, 9, 1]]
+const nearPerfectGameScoreTotal = 289
+
 describe("finalScore function", () => {
   let bowling;
 
@@ -28,7 +34,7 @@ describe("finalScore function", () => {
     expect(function() {
       bowling.finalScore(incompleteScore)
     }).toThrowError("Incomplete score provided")
-  })
+  });
 
   test('Adds up a simple low score', () => {
     expect(bowling.finalScore(simpleLowScore)).toBe(simpleLowScoreTotal)
@@ -48,6 +54,13 @@ describe("finalScore function", () => {
 
   test('Adds the points for lots of strikes', () => {
     expect(bowling.finalScore(lotsOfStrikesScore)).toBe(lotsOfStrikesScoreTotal)
+  });
+
+  test('Add all the points for a perfect game', () => {
+    expect(bowling.finalScore(perfectGameScore)).toBe(perfectGameScoreTotal)
   })
 
+  test('Add all the points for a near perfect game', () => {
+    expect(bowling.finalScore(nearPerfectGameScore)).toBe(nearPerfectGameScoreTotal)
+  })
 });
