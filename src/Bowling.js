@@ -10,11 +10,7 @@ Bowling.prototype.addRoll = function(number) {
 };
 
 Bowling.prototype._basicScoreCalculation = function(array) {
-  array.map( (frame) => {
-    frame.map( (roll) => {
-      this.total += roll
-    })
-  })
+  array.map( (frame) => { frame.map( (roll) => { this.total += roll }) })
 };
 
 Bowling.prototype._extraScoreCalculation = function(array) {
@@ -22,23 +18,16 @@ Bowling.prototype._extraScoreCalculation = function(array) {
 
   array.map( (frame, index) => {
     // Calculate what the next roll is
-    var rollPlusOne = () => {
-      return array[index + 1][0];
-    }
+    var rollPlusOne = () => { return array[index + 1][0]; }
 
     // Calculate what the next roll after that is
     var rollPlusTwo = () => {
-      if (array[index + 1].length == 1) {
-        return array[index + 2][0]
-      } else {
-        return array[index + 1][1]
-      }
+      if (array[index + 1].length == 1) { return array[index + 2][0] }
+      else { return array[index + 1][1] }
     }
 
     // For a spare, add the next roll
-    if (frame[0] + frame[1] == 10) {
-      extraPoints += rollPlusOne()
-    }
+    if (frame[0] + frame[1] == 10) { extraPoints += rollPlusOne() }
 
     // For a strike, add the next two rolls
     if (frame.length == 1) {
