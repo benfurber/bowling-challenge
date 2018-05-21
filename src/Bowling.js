@@ -10,7 +10,11 @@ Bowling.prototype.addRoll = function(number) {
 };
 
 Bowling.prototype._basicScoreCalculation = function(array) {
-  array.map( (frame) => { frame.map( (roll) => { this.total += roll }) })
+  array.map( (frame) => {
+    return frame.map( (roll) => {
+      return this.total += roll
+    })
+  })
 };
 
 Bowling.prototype._extraScoreCalculation = function(array) {
@@ -22,15 +26,15 @@ Bowling.prototype._extraScoreCalculation = function(array) {
 
     // Calculate what the next roll after that is
     var rollPlusTwo = () => {
-      if (array[index + 1].length == 1) { return array[index + 2][0] }
+      if (array[index + 1].length === 1) { return array[index + 2][0] }
       else { return array[index + 1][1] }
     }
 
     // For a spare, add the next roll
-    if (frame[0] + frame[1] == 10) { extraPoints += rollPlusOne() }
+    if (frame[0] + frame[1] === 10) { extraPoints += rollPlusOne() }
 
     // For a strike, add the next two rolls
-    if (frame.length == 1) {
+    if (frame.length === 1) {
       extraPoints += rollPlusOne()
       extraPoints += rollPlusTwo()
     }
@@ -42,7 +46,7 @@ Bowling.prototype._extraScoreCalculation = function(array) {
 Bowling.prototype.finalScore = function() {
   var array = this._scoreCard;
 
-  if (array.length != 10) {
+  if (array.length !== 10) {
     throw new Error("Incomplete score provided")
   };
 
@@ -53,7 +57,7 @@ Bowling.prototype.finalScore = function() {
 };
 
 Bowling.prototype._nextTurn = function(number) {
-  if (this._progress.frame != 9 && (number == 10 || this._progress.roll == 1)) {
+  if (this._progress.frame !== 9 && (number === 10 || this._progress.roll === 1)) {
     this._progress.frame += 1;
     this._progress.roll = 0;
   } else {
