@@ -10,7 +10,14 @@ import { Table } from 'semantic-ui-react'
 
 class ScoreCard extends Component {
   render() {
+    console.log(this.props);
+
+    const theRolls = this.props.rolls.map((number, i) =>
+      <Table.Cell colSpan='2' id='roll-{i}'>{number[0]} | {number[1]}</Table.Cell>
+    );
     return (
+      <div>
+
       <Table celled color='red'>
         <Table.Header>
           <Table.Row textAlign='center'>
@@ -28,10 +35,10 @@ class ScoreCard extends Component {
         </Table.Header>
         <Table.Body>
           <Table.Row>
-            <Table.Cell colSpan='1' id='roll-1-1'>2</Table.Cell>
-            <Table.Cell colSpan='1' id='roll-1-2'></Table.Cell>
-            <Table.Cell colSpan='1' id='roll-2-1'></Table.Cell>
-            <Table.Cell colSpan='1' id='roll-2-2'></Table.Cell>
+            <Table.Cell colSpan='1' id='roll-1-1'>{this.props.rolls[0][0]}</Table.Cell>
+            <Table.Cell colSpan='1' id='roll-1-2'>{this.props.rolls[0][1]}</Table.Cell>
+            <Table.Cell colSpan='1' id='roll-2-1'>{this.props.rolls[1][0]}</Table.Cell>
+            <Table.Cell colSpan='1' id='roll-2-2'>{this.props.rolls[1][1]}</Table.Cell>
             <Table.Cell colSpan='1' id='roll-3-1'></Table.Cell>
             <Table.Cell colSpan='1' id='roll-3-2'></Table.Cell>
             <Table.Cell colSpan='1' id='roll-4-1'></Table.Cell>
@@ -51,7 +58,7 @@ class ScoreCard extends Component {
             <Table.Cell colSpan='1' id='roll-10-3'></Table.Cell>
           </Table.Row>
           <Table.Row>
-            <Table.Cell colSpan='2' id='score-1'><strong>5</strong></Table.Cell>
+            <Table.Cell colSpan='2' id='score-1'><strong></strong></Table.Cell>
             <Table.Cell colSpan='2' id='score-2'> </Table.Cell>
             <Table.Cell colSpan='2' id='score-3'> </Table.Cell>
             <Table.Cell colSpan='2' id='score-4'> </Table.Cell>
@@ -62,9 +69,11 @@ class ScoreCard extends Component {
             <Table.Cell colSpan='2' id='score-9'> </Table.Cell>
             <Table.Cell colSpan='3' id='score-10'> </Table.Cell>
           </Table.Row>
+          <Table.Row>{theRolls}</Table.Row>
 
         </Table.Body>
       </Table>
+      </div>
     );
   }
 }
