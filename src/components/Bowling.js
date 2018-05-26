@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import ScoreCard from './ScoreCard'
+import ScoreCard from './ScoreCard'
 import { Button, Divider } from 'semantic-ui-react'
 
 import * as BowlingActions from '../actions/BowlingActions.js'
@@ -25,27 +25,33 @@ class Bowling extends Component {
     BowlingActions.addRoll(number)
   }
 
+
   render() {
     const { bowlingStore } = this.state;
 
-    const theRolls = bowlingStore.map((frame) => {
-      return frame.rolls.map((roll) => {
-        let key = 'roll-' + frame.id + '-' + roll;
-        return <li key={key} id={key}>{roll}</li>;
-      })
-    });
+    const theRolls = bowlingStore
+
+    const rollButtons = [];
+    for (var i = 0; i < 11; i++) {
+      let key = 'rollButton-' + i
+      rollButtons.push(
+        <Button onClick={this.addRoll.bind(this, i)} key={key} id={key}>{i}</Button>
+      )
+    }
 
     return (
       <div className="Bowling">
           <div>
             <ul>
-              { theRolls }
+              <ScoreCard theRolls={theRolls} />
             </ul>
           </div>
+
           <Divider hidden />
 
-          <Button onClick={this.addRoll.bind(this, 1)}>1</Button>
-          <Button onClick={this.addRoll.bind(this, 5)}>5</Button>
+          {rollButtons}
+
+          <Divider hidden />
 
       </div>
     );

@@ -4,11 +4,18 @@ import { Table } from 'semantic-ui-react'
 class ScoreCard extends Component {
   render() {
 
-    const scoreHeaders = [];
+    const theRolls = this.props.theRolls.map((frame) => {
+      return frame.rolls.map((roll, index) => {
+        let key = 'roll-' + frame.id + '-' + (index + 1)
+        return <Table.Cell colSpan='1' key={key} id={key}>{roll}</Table.Cell>
+      })
+    });
 
+    const scoreHeaders = [];
     for (var i = 1; i < 11; i++) {
+      let key = 'scoreHeader-' + i
       scoreHeaders.push(
-        <Table.HeaderCell colSpan={i.toString().length + 1}>{i}</Table.HeaderCell>
+        <Table.HeaderCell colSpan={i.toString().length + 1} key={key} id={key}>{i}</Table.HeaderCell>
       )
     };
 
