@@ -1,20 +1,10 @@
 import './App.css';
-import Bowling from './Bowling'
 import React, { Component } from 'react';
-import ScoreCard from './components/ScoreCard'
-import { Button, Container, Divider } from 'semantic-ui-react'
+import Bowling from './components/Bowling'
+import { Container, Divider } from 'semantic-ui-react'
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    var game = new Bowling()
-    game.addRoll(5)
-    game.addRoll(5)
-    game.addRoll(3)
-    this.state = { game: game._scoreCard };
-  }
   render() {
-    console.log(this.state.game)
     return (
       <div className="App">
         <header className="App-header">
@@ -25,11 +15,11 @@ class App extends Component {
           <Divider hidden />
           <Divider horizontal>Score Card</Divider>
           <Divider hidden />
-          <ScoreCard rolls={this.state.game} />
+
+          <Bowling />
+
           <Divider hidden />
         </Container>
-
-        <Button>Click Here</Button>
       </div>
     );
   }

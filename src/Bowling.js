@@ -5,6 +5,9 @@ function Bowling() {
 };
 
 Bowling.prototype.addRoll = function(number) {
+  if (!Number.isInteger(number)) {
+    throw new Error("Not given a number")
+  }
   this._scoreCard[this._progress.frame][this._progress.roll] = number;
   this._nextTurn(number)
 };
@@ -65,4 +68,6 @@ Bowling.prototype._nextTurn = function(number) {
   }
 }
 
-module.exports = Bowling;
+const bowling = new Bowling
+
+export default bowling;

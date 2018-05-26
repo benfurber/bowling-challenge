@@ -66,6 +66,12 @@ describe('Adding a roll', () => {
 
     expect(bowling._scoreCard).toContainEqual([10, 10, rollOne])
   })
+
+  test('Throws an error if not given an integer', () => {
+    expect(() => {
+      bowling.addRoll('name');
+    }).toThrow();
+  })
 });
 
 describe('Calculating the final score', () => {

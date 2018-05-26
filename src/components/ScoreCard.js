@@ -1,22 +1,8 @@
 import React, { Component } from 'react'
 import { Table } from 'semantic-ui-react'
 
-// bowling._scoreCard.map( function(array, arrayindex) {
-//   array.map( function(item, index) {
-//     let cellid = `roll-${arrayindex + 1}-${index + 1}`)
-//     getElementById(cellid).text(item)
-//   })
-// })
-
 class ScoreCard extends Component {
   render() {
-    console.log(this.props);
-
-    const theRolls = this.props.rolls.map((frame, x) =>
-      frame.map((roll, y) =>
-        <Table.Cell colSpan='1' id={'roll-' + (x + 1) + '-' + (y + 1)}>{roll}</Table.Cell>
-      )
-    );
 
     const scoreHeaders = [];
 
