@@ -34,10 +34,9 @@ class BowlingStore extends EventEmitter {
 
   getAllScores() {
     let running_total = 0
-    var frame = this.progress.frame
 
     var scores = Array(10).fill(' ')
-    for (var i = 0; i < frame; i++) {
+    for (var i = 0; i < this.progress.frame; i++) {
       running_total += this.scoreCard[i].score
       scores[i] = running_total
     }
@@ -90,7 +89,36 @@ class BowlingStore extends EventEmitter {
   }
 
   _extraPointsCalculation() {
-    return 0
+    this._sparePointsCalculation()
+    this._strikePointsCalculation()
+  }
+
+  _sparePointsCalculation() {
+    var frame = this.progress.frame
+    if (frame === 0 || this.progress.roll === 0) { return }
+
+    var previousFrame = frame - 1
+
+    if (this.scoreCard[previousFrame].rolls[0] + this.scoreCard[previousFrame].rolls[1] === 10) {
+      this.scoreCard[previousFrame].score += this.scoreCard[frame].rolls[0]
+    }
+  }
+
+  _strikePointsCalculation() {
+    var frame = this.progress.frame
+    if (frame <= 1 || this.progress.roll === 1) { return }
+
+    var previousFrame = frame - 1
+    var twoFramesBack = frame - 2
+
+    if (this.scoreCard[twoFramesBack].rolls[0] === 10) {
+      this.scoreCard[twoFramesBack].score += this.scoreCard[previousFrame].rolls[0]
+      if (this.scoreCard[previousFrame].rolls.length === 1) {
+        this.scoreCard[twoFramesBack].score += this.scoreCard[frame].rolls[0]
+      } else {
+        this.scoreCard[twoFramesBack].score += this.scoreCard[previousFrame].rolls[1]
+      }
+    }
   }
 
   _nextTurn(number) {
