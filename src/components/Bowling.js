@@ -9,14 +9,16 @@ class Bowling extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bowlingStore: BowlingStore.getAll()
+      bowlingRollsStore: BowlingStore.getAllRolls(),
+      bowlingScoresStore: BowlingStore.getAllScores()
     }
   }
 
   componentWillMount() {
     BowlingStore.on('change', () => {
       this.setState({
-        bowlingStore: BowlingStore.getAll()
+        bowlingRollsStore: BowlingStore.getAllRolls(),
+        bowlingScoresStore: BowlingStore.getAllScores()
       })
     })
   }
@@ -27,9 +29,10 @@ class Bowling extends Component {
 
 
   render() {
-    const { bowlingStore } = this.state;
+    const { bowlingRollsStore, bowlingScoresStore } = this.state;
 
-    const theRolls = bowlingStore
+    const theRolls = bowlingRollsStore
+    const theScores = bowlingScoresStore
 
     const rollButtons = [];
     for (var i = 0; i < 11; i++) {
@@ -49,6 +52,10 @@ class Bowling extends Component {
 
           <Divider hidden />
 
+          {theScores}
+
+          <Divider hidden />
+          
           {rollButtons}
 
           <Divider hidden />

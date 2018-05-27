@@ -5,27 +5,27 @@ class BowlingStore extends EventEmitter {
   constructor() {
     super()
     this.scoreCard = [
-      {id: 1, rolls: [], presentation: []},
-      {id: 2, rolls: [], presentation: []},
-      {id: 3, rolls: [], presentation: []},
-      {id: 4, rolls: [], presentation: []},
-      {id: 5, rolls: [], presentation: []},
-      {id: 6, rolls: [], presentation: []},
-      {id: 7, rolls: [], presentation: []},
-      {id: 8, rolls: [], presentation: []},
-      {id: 9, rolls: [], presentation: []},
-      {id: 10, rolls: [], presentation: []},
+      {id: 1, rolls: [], presentation: [], score: 0},
+      {id: 2, rolls: [], presentation: [], score: 0},
+      {id: 3, rolls: [], presentation: [], score: 0},
+      {id: 4, rolls: [], presentation: [], score: 0},
+      {id: 5, rolls: [], presentation: [], score: 0},
+      {id: 6, rolls: [], presentation: [], score: 0},
+      {id: 7, rolls: [], presentation: [], score: 0},
+      {id: 8, rolls: [], presentation: [], score: 0},
+      {id: 9, rolls: [], presentation: [], score: 0},
+      {id: 10, rolls: [], presentation: [], score: 0},
     ]
     this.progress = { 'frame': 0, 'roll': 0 }
     this.total = 0
   }
-
 
   addRoll(number) {
     this._addRollChecks(number)
 
     this.addToRoll(number)
     this.addToPresentation(number)
+    this.addToScore(number)
 
     this.nextTurn(number)
     this.emit("change")
@@ -48,6 +48,13 @@ class BowlingStore extends EventEmitter {
     }
   }
 
+  addToScore(number) {
+    console.log(this.scoreCard[this.progress.frame].score)
+    this.scoreCard[this.progress.frame].score += number
+    console.log(this.scoreCard[this.progress.frame].score)
+    console.log(this.getAllScores())
+  }
+
   nextTurn(number) {
     if (this.progress.frame !== 9 && (number === 10 || this.progress.roll === 1)) {
       this.progress.frame += 1;
@@ -57,13 +64,19 @@ class BowlingStore extends EventEmitter {
     }
   }
 
-  getAll() {
+  getAllRolls() {
     return this.scoreCard.map((frame) => {
       if (frame.rolls[0] == null) {
         return ['', '']
       } else {
         return frame.presentation
       }
+    });
+  }
+
+  getAllScores() {
+    return this.scoreCard.map((frame) => {
+      return frame.score
     });
   }
 
