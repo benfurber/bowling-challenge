@@ -37,6 +37,8 @@ class Bowling extends Component {
 
     if (roll !== 0 && frame !== 9) {
       return (11 - this.state.bowlingRollsStore[frame])
+    } else if (frame === 10) {
+      return 0
     }
     return 11;
   }
