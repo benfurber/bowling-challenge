@@ -17,6 +17,7 @@ class BowlingStore extends EventEmitter {
       {rolls: [], presentation: [], score: 0}
     ]
     this.progress = { 'frame': 0, 'roll': 0 }
+    this.total = 0
   }
 
   // Main 'public' methods
@@ -63,7 +64,7 @@ class BowlingStore extends EventEmitter {
 
     this._nextTurn(number)
     if (this.progress.frame === 10) {
-      console.log('game finished')
+      this.total = this.getAllScores().last
     }
     this.emit("change")
   }
@@ -132,11 +133,24 @@ class BowlingStore extends EventEmitter {
     }
   }
 
-  _nextTurn(number) {
+  _frameComplete(number) {
     if (this.progress.frame !== 9 && (number === 10 || this.progress.roll === 1)) {
-      this.progress.frame += 1;
-      this.progress.roll = 0;
+      return true
     } else if (this.progress.frame === 9 && this.progress.roll === 2) {
+      return true
+    } else if (this.progress.frame === 9 && this.progress.roll === 1) {
+      if ((this.scoreCard[9].rolls[0] + number) < 10) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  _nextTurn(number) {
+    var answer = this._frameComplete(number)
+
+    if (answer) {
       this.progress.frame += 1;
       this.progress.roll = 0;
     } else {
@@ -154,7 +168,5 @@ class BowlingStore extends EventEmitter {
 const bowlingStore = new BowlingStore();
 
 dispatcher.register(bowlingStore.handleActions.bind(bowlingStore))
-
-window.bowlingStore = bowlingStore
 
 export default bowlingStore;

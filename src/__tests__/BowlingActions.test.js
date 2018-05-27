@@ -1,6 +1,5 @@
 import React from 'react';
 import * as actions from '../actions/BowlingActions'
-import * as stores from '../stores/BowlingStore'
 
 xdescribe('actions', () => {
   it('should dispatch a "ADD_ROLL" type with a number', () => {

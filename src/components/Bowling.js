@@ -11,7 +11,8 @@ class Bowling extends Component {
     this.state = {
       bowlingRollsStore: BowlingStore.getAllRolls(),
       bowlingScoresStore: BowlingStore.getAllScores(),
-      bowlingProgressStore: BowlingStore.progress
+      bowlingProgressStore: BowlingStore.progress,
+      bowlingTotal: BowlingStore.total
     }
   }
 
@@ -20,7 +21,8 @@ class Bowling extends Component {
       this.setState({
         bowlingRollsStore: BowlingStore.getAllRolls(),
         bowlingScoresStore: BowlingStore.getAllScores(),
-        bowlingProgressStore: BowlingStore.progress
+        bowlingProgressStore: BowlingStore.progress,
+        bowlingTotal: BowlingStore.total
       })
     })
   }
@@ -30,8 +32,11 @@ class Bowling extends Component {
   }
 
   maxButton() {
-    if (this.state.bowlingProgressStore.roll !== 0) {
-      return (11 - this.state.bowlingRollsStore[this.state.bowlingProgressStore.frame])
+    let frame = this.state.bowlingProgressStore.frame
+    let roll = this.state.bowlingProgressStore.roll
+
+    if (roll !== 0 && frame !== 9) {
+      return (11 - this.state.bowlingRollsStore[frame])
     }
     return 11;
   }
