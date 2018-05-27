@@ -14,7 +14,7 @@ class BowlingStore extends EventEmitter {
       {id: 7, rolls: [], presentation: [], score: 0},
       {id: 8, rolls: [], presentation: [], score: 0},
       {id: 9, rolls: [], presentation: [], score: 0},
-      {id: 10, rolls: [], presentation: [], score: 0},
+      {id: 10, rolls: [], presentation: [], score: 0}
     ]
     this.progress = { 'frame': 0, 'roll': 0 }
     this.total = 0
@@ -63,6 +63,9 @@ class BowlingStore extends EventEmitter {
     this._addToScore(number)
 
     this._nextTurn(number)
+    if (this.progress.frame === 10) {
+      console.log('game finished')
+    }
     this.emit("change")
   }
 
@@ -73,6 +76,10 @@ class BowlingStore extends EventEmitter {
 
   _addToPresentation(number) {
     var presentationLocation = this.scoreCard[this.progress.frame].presentation
+
+    if (number === 10 && this.progress.frame === 9) {
+      return presentationLocation[this.progress.roll] = 'X'
+    }
 
     if (number === 10 && this.progress.roll === 0) {
       presentationLocation[this.progress.roll] = ' '
@@ -95,7 +102,9 @@ class BowlingStore extends EventEmitter {
 
   _sparePointsCalculation() {
     var frame = this.progress.frame
-    if (frame === 0 || this.progress.roll === 0) { return }
+    if (frame >= 10 || (frame < 1 || this.progress.roll === 1)) { return }
+
+    console.log("Spare: ", this.progress.frame)
 
     var previousFrame = frame - 1
 
@@ -106,7 +115,9 @@ class BowlingStore extends EventEmitter {
 
   _strikePointsCalculation() {
     var frame = this.progress.frame
-    if (frame <= 1 || this.progress.roll === 1) { return }
+    if (frame > 10 || (frame < 2 || this.progress.roll === 1)) { return }
+
+    console.log("Strike: ", this.progress.frame)
 
     var previousFrame = frame - 1
     var twoFramesBack = frame - 2
@@ -123,6 +134,9 @@ class BowlingStore extends EventEmitter {
 
   _nextTurn(number) {
     if (this.progress.frame !== 9 && (number === 10 || this.progress.roll === 1)) {
+      this.progress.frame += 1;
+      this.progress.roll = 0;
+    } else if (this.progress.frame === 9 && this.progress.roll === 2) {
       this.progress.frame += 1;
       this.progress.roll = 0;
     } else {
