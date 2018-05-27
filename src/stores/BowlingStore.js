@@ -104,7 +104,6 @@ class BowlingStore extends EventEmitter {
     var frame = this.progress.frame
     if (frame >= 10 || (frame < 1 || this.progress.roll === 1)) { return }
 
-    console.log("Spare: ", this.progress.frame)
 
     var previousFrame = frame - 1
 
@@ -115,12 +114,14 @@ class BowlingStore extends EventEmitter {
 
   _strikePointsCalculation() {
     var frame = this.progress.frame
-    if (frame > 10 || (frame < 2 || this.progress.roll === 1)) { return }
-
-    console.log("Strike: ", this.progress.frame)
+    if (frame < 2 || this.progress.roll === 1) { return }
 
     var previousFrame = frame - 1
     var twoFramesBack = frame - 2
+
+    if (frame === 9 && this.progress.roll === 2) {
+      twoFramesBack = frame - 1
+    }
 
     if (this.scoreCard[twoFramesBack].rolls[0] === 10) {
       this.scoreCard[twoFramesBack].score += this.scoreCard[previousFrame].rolls[0]

@@ -10,7 +10,8 @@ class Bowling extends Component {
     super(props);
     this.state = {
       bowlingRollsStore: BowlingStore.getAllRolls(),
-      bowlingScoresStore: BowlingStore.getAllScores()
+      bowlingScoresStore: BowlingStore.getAllScores(),
+      bowlingProgressStore: BowlingStore.progress
     }
   }
 
@@ -18,7 +19,8 @@ class Bowling extends Component {
     BowlingStore.on('change', () => {
       this.setState({
         bowlingRollsStore: BowlingStore.getAllRolls(),
-        bowlingScoresStore: BowlingStore.getAllScores()
+        bowlingScoresStore: BowlingStore.getAllScores(),
+        bowlingProgressStore: BowlingStore.progress
       })
     })
   }
@@ -27,9 +29,8 @@ class Bowling extends Component {
     BowlingActions.addRoll(number)
   }
 
-
   render() {
-    const { bowlingRollsStore, bowlingScoresStore } = this.state;
+    const { bowlingRollsStore, bowlingScoresStore, bowlingProgressStore } = this.state;
 
     const theRolls = bowlingRollsStore
     const theScores = bowlingScoresStore
