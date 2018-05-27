@@ -29,8 +29,15 @@ class Bowling extends Component {
     BowlingActions.addRoll(number)
   }
 
+  maxButton() {
+    if (this.state.bowlingProgressStore.roll !== 0) {
+      return (11 - this.state.bowlingRollsStore[this.state.bowlingProgressStore.frame])
+    }
+    return 11;
+  }
+
   render() {
-    const { bowlingRollsStore, bowlingScoresStore, bowlingProgressStore } = this.state;
+    const { bowlingRollsStore, bowlingScoresStore } = this.state;
 
     const theRolls = bowlingRollsStore
     const theScores = bowlingScoresStore
@@ -53,7 +60,7 @@ class Bowling extends Component {
 
           <Divider hidden />
 
-          {rollButtons}
+          {rollButtons.slice(0,this.maxButton())}
 
           <Divider hidden />
 
