@@ -20,49 +20,7 @@ class BowlingStore extends EventEmitter {
     this.total = 0
   }
 
-  addRoll(number) {
-    this._addRollChecks(number)
-
-    this.addToRoll(number)
-    this.addToPresentation(number)
-    this.addToScore(number)
-
-    this.nextTurn(number)
-    this.emit("change")
-  }
-
-  addToRoll(number) {
-    this.scoreCard[this.progress.frame].rolls[this.progress.roll] = number
-  }
-
-  addToPresentation(number) {
-    var presentationLocation = this.scoreCard[this.progress.frame].presentation
-
-    if (number === 10 && this.progress.roll === 0) {
-      presentationLocation[this.progress.roll] = ' '
-      presentationLocation[this.progress.roll + 1] = 'X'
-    } else if (number + presentationLocation[this.progress.roll - 1] === 10) {
-      presentationLocation[this.progress.roll] = '/'
-    } else {
-      presentationLocation[this.progress.roll] = number
-    }
-  }
-
-  addToScore(number) {
-    console.log(this.scoreCard[this.progress.frame].score)
-    this.scoreCard[this.progress.frame].score += number
-    console.log(this.scoreCard[this.progress.frame].score)
-    console.log(this.getAllScores())
-  }
-
-  nextTurn(number) {
-    if (this.progress.frame !== 9 && (number === 10 || this.progress.roll === 1)) {
-      this.progress.frame += 1;
-      this.progress.roll = 0;
-    } else {
-      this.progress.roll += 1;
-    }
-  }
+  // Main 'public' methods
 
   getAllRolls() {
     return this.scoreCard.map((frame) => {
@@ -75,18 +33,72 @@ class BowlingStore extends EventEmitter {
   }
 
   getAllScores() {
-    return this.scoreCard.map((frame) => {
-      return frame.score
-    });
+    let running_total = 0
+    var frame = this.progress.frame
+
+    var scores = Array(10).fill(' ')
+    for (var i = 0; i < frame; i++) {
+      running_total += this.scoreCard[i].score
+      scores[i] = running_total
+    }
+    return scores
   }
 
   handleActions(action) {
     switch(action.type) {
       case "ADD_ROLL": {
-        this.addRoll(action.number);
+        this._addRoll(action.number);
         break;
       }
       default: {}
+    }
+  }
+
+  // 'Private' methods
+
+  _addRoll(number) {
+    this._addRollChecks(number)
+
+    this._addToRoll(number)
+    this._addToPresentation(number)
+    this._addToScore(number)
+
+    this._nextTurn(number)
+    this.emit("change")
+  }
+
+  _addToRoll(number) {
+    this.scoreCard[this.progress.frame].rolls[this.progress.roll] = number
+    this._extraPointsCalculation()
+  }
+
+  _addToPresentation(number) {
+    var presentationLocation = this.scoreCard[this.progress.frame].presentation
+
+    if (number === 10 && this.progress.roll === 0) {
+      presentationLocation[this.progress.roll] = ' '
+      presentationLocation[this.progress.roll + 1] = 'X'
+    } else if (number + presentationLocation[this.progress.roll - 1] === 10) {
+      presentationLocation[this.progress.roll] = '/'
+    } else {
+      presentationLocation[this.progress.roll] = number
+    }
+  }
+
+  _addToScore(number) {
+    this.scoreCard[this.progress.frame].score += number
+  }
+
+  _extraPointsCalculation() {
+    return 0
+  }
+
+  _nextTurn(number) {
+    if (this.progress.frame !== 9 && (number === 10 || this.progress.roll === 1)) {
+      this.progress.frame += 1;
+      this.progress.roll = 0;
+    } else {
+      this.progress.roll += 1;
     }
   }
 

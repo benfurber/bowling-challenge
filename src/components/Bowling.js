@@ -46,16 +46,12 @@ class Bowling extends Component {
       <div className="Bowling">
           <div>
             <ul>
-              <ScoreCard theRolls={theRolls} />
+              <ScoreCard theRolls={theRolls} theScores={theScores} />
             </ul>
           </div>
 
           <Divider hidden />
 
-          {theScores}
-
-          <Divider hidden />
-          
           {rollButtons}
 
           <Divider hidden />

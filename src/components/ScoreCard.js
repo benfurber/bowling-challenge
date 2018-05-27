@@ -11,6 +11,11 @@ class ScoreCard extends Component {
       })
     });
 
+    const theScores = this.props.theScores.map((score, index) => {
+      let key = 'score-' + (index + 1)
+      return <Table.Cell colSpan='2' key={key} id={key}><strong>{score}</strong></Table.Cell>
+    });
+
     const scoreHeaders = [];
     for (var i = 1; i < 11; i++) {
       let key = 'scoreHeader-' + i
@@ -28,18 +33,7 @@ class ScoreCard extends Component {
         </Table.Header>
         <Table.Body>
           <Table.Row>{theRolls}</Table.Row>
-          <Table.Row>
-            <Table.Cell colSpan='2' id='score-1'><strong></strong></Table.Cell>
-            <Table.Cell colSpan='2' id='score-2'><strong></strong></Table.Cell>
-            <Table.Cell colSpan='2' id='score-3'><strong></strong></Table.Cell>
-            <Table.Cell colSpan='2' id='score-4'><strong></strong></Table.Cell>
-            <Table.Cell colSpan='2' id='score-5'><strong></strong></Table.Cell>
-            <Table.Cell colSpan='2' id='score-6'><strong></strong></Table.Cell>
-            <Table.Cell colSpan='2' id='score-7'><strong></strong></Table.Cell>
-            <Table.Cell colSpan='2' id='score-8'><strong></strong></Table.Cell>
-            <Table.Cell colSpan='2' id='score-9'><strong></strong></Table.Cell>
-            <Table.Cell colSpan='3' id='score-10'><strong></strong></Table.Cell>
-          </Table.Row>
+          <Table.Row>{theScores}</Table.Row>
         </Table.Body>
       </Table>
       </div>
