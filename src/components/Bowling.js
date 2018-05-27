@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ScoreCard from './ScoreCard'
-import { Button, Divider } from 'semantic-ui-react'
+import { Container, Button, Divider } from 'semantic-ui-react'
 
 import * as BowlingActions from '../actions/BowlingActions.js'
 import BowlingStore from '../stores/BowlingStore.js'
@@ -52,18 +52,15 @@ class Bowling extends Component {
 
     return (
       <div className="Bowling">
-          <div>
-            <ul>
-              <ScoreCard theRolls={theRolls} theScores={theScores} />
-            </ul>
-          </div>
+        <ScoreCard theRolls={theRolls} theScores={theScores} />
 
-          <Divider hidden />
+        <Divider hidden />
 
-          {rollButtons.slice(0,this.maxButton())}
+        <Container textAlign={'left'}>
+          <strong>Add roll:</strong> {rollButtons.slice(0,this.maxButton())}
+        </Container>
 
-          <Divider hidden />
-
+        <Divider hidden />
       </div>
     );
   }

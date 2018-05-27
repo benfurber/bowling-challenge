@@ -1,7 +1,7 @@
 import dispatcher from '../dispatcher';
 
 export function addRoll(number) {
-  dispatcher.dispatch({
+  return dispatcher.dispatch({
     type: "ADD_ROLL",
     number,
   })

@@ -5,19 +5,18 @@ class BowlingStore extends EventEmitter {
   constructor() {
     super()
     this.scoreCard = [
-      {id: 1, rolls: [], presentation: [], score: 0},
-      {id: 2, rolls: [], presentation: [], score: 0},
-      {id: 3, rolls: [], presentation: [], score: 0},
-      {id: 4, rolls: [], presentation: [], score: 0},
-      {id: 5, rolls: [], presentation: [], score: 0},
-      {id: 6, rolls: [], presentation: [], score: 0},
-      {id: 7, rolls: [], presentation: [], score: 0},
-      {id: 8, rolls: [], presentation: [], score: 0},
-      {id: 9, rolls: [], presentation: [], score: 0},
-      {id: 10, rolls: [], presentation: [], score: 0}
+      {rolls: [], presentation: [], score: 0},
+      {rolls: [], presentation: [], score: 0},
+      {rolls: [], presentation: [], score: 0},
+      {rolls: [], presentation: [], score: 0},
+      {rolls: [], presentation: [], score: 0},
+      {rolls: [], presentation: [], score: 0},
+      {rolls: [], presentation: [], score: 0},
+      {rolls: [], presentation: [], score: 0},
+      {rolls: [], presentation: [], score: 0},
+      {rolls: [], presentation: [], score: 0}
     ]
     this.progress = { 'frame': 0, 'roll': 0 }
-    this.total = 0
   }
 
   // Main 'public' methods

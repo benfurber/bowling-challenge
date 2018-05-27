@@ -1,7 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount, render } from 'enzyme';
+
 import App from '../App';
 
-it('renders without crashing', () => {
-  shallow(<App />);
-});
+describe('On load', () => {
+
+  it('renders without crashing', () => {
+    expect(shallow(<App />).contains(<h1 className="App-title">Bowling!</h1>)).toBe(true);
+  });
+})
