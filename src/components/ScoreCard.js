@@ -5,7 +5,7 @@ class ScoreCard extends Component {
   render() {
 
     const theRolls = this.props.theRolls.map((frame) => {
-      return frame.rolls.map((roll, index) => {
+      return frame.map((roll, index) => {
         let key = 'roll-' + frame.id + '-' + (index + 1)
         return <Table.Cell colSpan='1' key={key} id={key}>{roll}</Table.Cell>
       })
@@ -22,7 +22,7 @@ class ScoreCard extends Component {
     return (
       <div>
 
-      <Table celled color='red'>
+      <Table celled unstackable color='red'>
         <Table.Header>
           <Table.Row textAlign='center'>{scoreHeaders}</Table.Row>
         </Table.Header>
