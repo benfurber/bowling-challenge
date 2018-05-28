@@ -9,20 +9,20 @@ class Bowling extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bowlingRollsStore: BowlingStore.getAllRolls(),
-      bowlingScoresStore: BowlingStore.getAllScores(),
-      bowlingProgressStore: BowlingStore.progress,
-      bowlingTotal: BowlingStore.total
+      rollsStore: BowlingStore.getAllRolls(),
+      scoresStore: BowlingStore.getAllScores(),
+      progressStore: BowlingStore.progress,
+      total: BowlingStore.total
     }
   }
 
   componentWillMount() {
     BowlingStore.on('change', () => {
       this.setState({
-        bowlingRollsStore: BowlingStore.getAllRolls(),
-        bowlingScoresStore: BowlingStore.getAllScores(),
-        bowlingProgressStore: BowlingStore.progress,
-        bowlingTotal: BowlingStore.total
+        rollsStore: BowlingStore.getAllRolls(),
+        scoresStore: BowlingStore.getAllScores(),
+        progressStore: BowlingStore.progress,
+        total: BowlingStore.total
       })
     })
   }
@@ -32,11 +32,11 @@ class Bowling extends Component {
   }
 
   maxButton() {
-    let frame = this.state.bowlingProgressStore.frame
-    let roll = this.state.bowlingProgressStore.roll
+    let frame = this.state.progressStore.frame
+    let roll = this.state.progressStore.roll
 
     if (roll !== 0 && frame !== 9) {
-      return (11 - this.state.bowlingRollsStore[frame])
+      return (11 - this.state.rollsStore[frame])
     } else if (frame === 10) {
       return 0
     }
@@ -44,10 +44,10 @@ class Bowling extends Component {
   }
 
   render() {
-    const { bowlingRollsStore, bowlingScoresStore } = this.state;
+    const { rollsStore, scoresStore } = this.state;
 
-    const theRolls = bowlingRollsStore
-    const theScores = bowlingScoresStore
+    const theRolls = rollsStore
+    const theScores = scoresStore
 
     const rollButtons = [];
     for (var i = 0; i < 11; i++) {

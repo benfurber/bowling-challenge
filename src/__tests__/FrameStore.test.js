@@ -1,9 +1,13 @@
 import React from 'react';
 import { FrameStore } from '../stores/FrameStore';
 
-var frameStore = new FrameStore;
+var frameStore;
 
 describe('FrameStore', () => {
+
+  beforeEach(() => {
+    frameStore = new FrameStore
+  })
 
   describe('Constructor on load', () => {
     it('Has an empty rolls array', () => {
