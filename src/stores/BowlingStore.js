@@ -24,7 +24,7 @@ class BowlingStore extends EventEmitter {
 
   getAllRolls() {
     return this.scoreCard.map((frame) => {
-      if (frame.rolls[0] == null) {
+      if (frame.presentation[0] == null) {
         return ['', '']
       } else {
         return frame.presentation
@@ -56,13 +56,12 @@ class BowlingStore extends EventEmitter {
   // 'Private' methods
 
   _addRoll(number) {
-    this._addRollChecks(number)
+    this.scoreCard[this.progress.frame].addRoll(number)
 
-    this._addToRoll(number)
-    this._addToPresentation(number)
     this._addToScore(number)
 
     this._nextTurn(number)
+
     if (this.progress.frame === 10) {
       this.total = this.getAllScores().last
     }
@@ -134,14 +133,10 @@ class BowlingStore extends EventEmitter {
   }
 
   _frameComplete(number) {
-    if (this.progress.frame !== 9 && (number === 10 || this.progress.roll === 1)) {
+    var currentFrame = this.scoreCard[this.progress.frame]
+
+    if (currentFrame.type == 'NORMAL' && currentFrame.presentation.length == 2) {
       return true
-    } else if (this.progress.frame === 9 && this.progress.roll === 2) {
-      return true
-    } else if (this.progress.frame === 9 && this.progress.roll === 1) {
-      if ((this.scoreCard[9].rolls[0] + number) < 10) {
-        return true
-      }
     }
 
     return false
@@ -165,8 +160,6 @@ class BowlingStore extends EventEmitter {
   }
 }
 
-const bowlingStore = new BowlingStore();
+// dispatcher.register(bowlingStore.handleActions.bind(bowlingStore))
 
-dispatcher.register(bowlingStore.handleActions.bind(bowlingStore))
-
-export default bowlingStore;
+module.exports = { BowlingStore }
