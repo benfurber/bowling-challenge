@@ -44,7 +44,7 @@ class Bowling extends Component {
   }
 
   addRollText() {
-    if (this.maxButton() == 0) { return }
+    if (this.maxButton() === 0) { return }
     return <strong>Add Roll: </strong>
   }
 
