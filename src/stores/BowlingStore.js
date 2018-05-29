@@ -1,21 +1,11 @@
 import { EventEmitter } from 'events';
 import dispatcher from '../dispatcher.js';
+import { FrameStore } from '../stores/FrameStore'
 
 class BowlingStore extends EventEmitter {
   constructor() {
     super()
-    this.scoreCard = [
-      {rolls: [], presentation: [], score: 0},
-      {rolls: [], presentation: [], score: 0},
-      {rolls: [], presentation: [], score: 0},
-      {rolls: [], presentation: [], score: 0},
-      {rolls: [], presentation: [], score: 0},
-      {rolls: [], presentation: [], score: 0},
-      {rolls: [], presentation: [], score: 0},
-      {rolls: [], presentation: [], score: 0},
-      {rolls: [], presentation: [], score: 0},
-      {rolls: [], presentation: [], score: 0}
-    ]
+    this.scoreCard = this._populateScoreCard()
     this.progress = { 'frame': 0, 'roll': 0 }
     this.total = 0
   }
@@ -24,7 +14,7 @@ class BowlingStore extends EventEmitter {
 
   getAllRolls() {
     return this.scoreCard.map((frame) => {
-      if (frame.rolls[0] == null) {
+      if (frame.presentation[0] == null) {
         return ['', '']
       } else {
         return frame.presentation
@@ -55,14 +45,17 @@ class BowlingStore extends EventEmitter {
 
   // 'Private' methods
 
+  _populateScoreCard() {
+    let framesArray = Array(9).fill().map(u => (new FrameStore()))
+    framesArray.push(new FrameStore('END'))
+    return framesArray
+  }
+
   _addRoll(number) {
-    this._addRollChecks(number)
-
-    this._addToRoll(number)
-    this._addToPresentation(number)
-    this._addToScore(number)
-
+    this.scoreCard[this.progress.frame].addRoll(number)
+    this._extraPointsCalculation()
     this._nextTurn(number)
+
     if (this.progress.frame === 10) {
       this.total = this.getAllScores().last
     }
@@ -70,7 +63,6 @@ class BowlingStore extends EventEmitter {
   }
 
   _addToRoll(number) {
-    this.scoreCard[this.progress.frame].rolls[this.progress.roll] = number
     this._extraPointsCalculation()
   }
 
@@ -89,10 +81,6 @@ class BowlingStore extends EventEmitter {
     } else {
       presentationLocation[this.progress.roll] = number
     }
-  }
-
-  _addToScore(number) {
-    this.scoreCard[this.progress.frame].score += number
   }
 
   _extraPointsCalculation() {
@@ -134,14 +122,14 @@ class BowlingStore extends EventEmitter {
   }
 
   _frameComplete(number) {
-    if (this.progress.frame !== 9 && (number === 10 || this.progress.roll === 1)) {
+    var currentFrame = this.scoreCard[this.progress.frame]
+
+    if (currentFrame.type == 'NORMAL' && currentFrame.presentation.length == 2) {
       return true
-    } else if (this.progress.frame === 9 && this.progress.roll === 2) {
+    } else if (currentFrame.presentation.length == 3) {
       return true
-    } else if (this.progress.frame === 9 && this.progress.roll === 1) {
-      if ((this.scoreCard[9].rolls[0] + number) < 10) {
-        return true
-      }
+    } else if (currentFrame.presentation.length == 2 && (currentFrame.rolls[0] + currentFrame.rolls[1] < 10)) {
+      return true
     }
 
     return false
