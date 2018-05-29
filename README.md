@@ -1,7 +1,7 @@
 Bowling Challenge
 =================
 
-![Screenshot of my app](https://www.dropbox.com/s/a8cm198sa47inau/bowling-screenshot.png?dl=0)
+![Screenshot of my app](https://github.com/benfurber/bowling-challenge/blob/master/public/bowling-screenshot.png)
 
 Task
 -----
