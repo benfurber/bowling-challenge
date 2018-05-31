@@ -5,7 +5,8 @@ import { FrameStore } from '../stores/FrameStore'
 describe('bowlingStore', () => {
 
   describe('constructor on load', () => {
-    it('scoreCard is has 10 frames', () => {
+    it('scoreCard is populated with 10 frames', () => {
+      expect(bowlingStore.scoreCard).toContainEqual(new FrameStore)
       expect(bowlingStore.scoreCard.length).toEqual(10)
     })
 
@@ -84,6 +85,55 @@ describe('bowlingStore', () => {
       expect(() => {
         bowlingStore._addRoll(4)
       }).toThrow()
+    })
+  })
+
+  describe('_sparePointsCalculation()', () => {
+    it('Current roll added to a previous frame score if previous frame is a spare', () => {
+      const roll = 5
+      const startingScore = 10
+      var firstFrame = {rolls: [6, 4], score: startingScore }
+      var secondFrame = {rolls: [roll], score: 5 }
+
+      bowlingStore.scoreCard = [firstFrame, secondFrame]
+      bowlingStore.progress = { 'frame': 1, 'roll': 0 }
+
+      bowlingStore._sparePointsCalculation()
+
+      expect(firstFrame.score).toEqual(startingScore + roll)
+    })
+  })
+
+  describe('_strikePointsCalculation()', () => {
+    it('Current roll (5) and previous roll (5) added to the previous frame score if previous frame is a strike', () => {
+      const firstExtraRoll = 5
+      const secondExtraRoll = 5
+      const strike = 10
+      var firstFrame = {rolls: [strike], score: strike }
+      var secondFrame = {rolls: [firstExtraRoll, secondExtraRoll], score: (firstExtraRoll + secondExtraRoll) }
+
+      bowlingStore.scoreCard = [firstFrame, secondFrame]
+      bowlingStore.progress = { 'frame': 2, 'roll': 0 }
+
+      bowlingStore._strikePointsCalculation()
+
+      expect(firstFrame.score).toEqual(strike + firstExtraRoll + secondExtraRoll)
+    })
+
+    it('Current roll (10) and previous roll (10) added to the previous frame score if previous frame is a strike', () => {
+      const strike = 10
+      const firstExtraRoll = 5
+      const secondExtraRoll = 5
+      var firstFrame = {rolls: [strike], score: strike }
+      var secondFrame = {rolls: [strike], score: strike }
+      var thirdFrame = {rolls: [strike], score: strike }
+
+      bowlingStore.scoreCard = [firstFrame, secondFrame, thirdFrame]
+      bowlingStore.progress = { 'frame': 2, 'roll': 0 }
+
+      bowlingStore._strikePointsCalculation()
+
+      expect(firstFrame.score).toEqual(strike + strike + strike)
     })
   })
 })

@@ -43,6 +43,11 @@ class Bowling extends Component {
     return 11;
   }
 
+  addRollText() {
+    if (this.maxButton() === 0) { return }
+    return <strong>Add Roll: </strong>
+  }
+
   render() {
     const { rollsStore, scoresStore } = this.state;
 
@@ -53,7 +58,7 @@ class Bowling extends Component {
     for (var i = 0; i < 11; i++) {
       let key = 'rollButton-' + i
       rollButtons.push(
-        <Button onClick={this.addRoll.bind(this, i)} key={key} id={key}>{i}</Button>
+        <Button onClick={this.addRoll.bind(this, i)} key={key} id={key} color='red'>{i}</Button>
       )
     }
 
@@ -64,7 +69,13 @@ class Bowling extends Component {
         <Divider hidden />
 
         <Container textAlign={'left'}>
-          <strong>Add roll:</strong> {rollButtons.slice(0,this.maxButton())}
+          {this.addRollText()} {rollButtons.slice(0,this.maxButton())}
+        </Container>
+
+        <Divider hidden />
+
+        <Container textAlign={'left'}>
+          <Button size='small'><a href='/'>Reset</a></Button>
         </Container>
 
         <Divider hidden />

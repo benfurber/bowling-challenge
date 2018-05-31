@@ -62,27 +62,6 @@ class BowlingStore extends EventEmitter {
     this.emit("change")
   }
 
-  _addToRoll(number) {
-    this._extraPointsCalculation()
-  }
-
-  _addToPresentation(number) {
-    var presentationLocation = this.scoreCard[this.progress.frame].presentation
-
-    if (number === 10 && this.progress.frame === 9) {
-      return presentationLocation[this.progress.roll] = 'X'
-    }
-
-    if (number === 10 && this.progress.roll === 0) {
-      presentationLocation[this.progress.roll] = ' '
-      presentationLocation[this.progress.roll + 1] = 'X'
-    } else if (number + presentationLocation[this.progress.roll - 1] === 10) {
-      presentationLocation[this.progress.roll] = '/'
-    } else {
-      presentationLocation[this.progress.roll] = number
-    }
-  }
-
   _extraPointsCalculation() {
     this._sparePointsCalculation()
     this._strikePointsCalculation()
@@ -91,7 +70,6 @@ class BowlingStore extends EventEmitter {
   _sparePointsCalculation() {
     var frame = this.progress.frame
     if (frame >= 10 || (frame < 1 || this.progress.roll === 1)) { return }
-
 
     var previousFrame = frame - 1
 
