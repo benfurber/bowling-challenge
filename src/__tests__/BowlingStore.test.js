@@ -5,7 +5,8 @@ import { FrameStore } from '../stores/FrameStore'
 describe('bowlingStore', () => {
 
   describe('constructor on load', () => {
-    it('scoreCard is has 10 frames', () => {
+    it('scoreCard is populated with 10 frames', () => {
+      expect(bowlingStore.scoreCard).toContainEqual(new FrameStore)
       expect(bowlingStore.scoreCard.length).toEqual(10)
     })
 

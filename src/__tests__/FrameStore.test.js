@@ -80,6 +80,15 @@ describe('FrameStore', () => {
       frameStore.addRoll(10)
       expect(frameStore.rolls).toEqual([10, 10, 10])
     })
+
+    it("Doesn't allow a third roll if a strike/spare wasn't already rolled", () => {
+      frameStore.addRoll(5)
+      frameStore.addRoll(4)
+
+      expect(() => {
+        frameStore.addRoll(5)
+      }).toThrow
+    })
   })
 
   describe('addPresentation()', () => {
